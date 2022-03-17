@@ -1,24 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsGoogle } from 'react-icons/bs';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { FaUserPlus } from 'react-icons/fa';
 
 function OtrosAccesos() {
     return (
         <OtrosAccesosContainer>
             <Lineas>
                 <Linea />
-                <Texto>otras opciones para ingresar</Texto>
+                <Texto>otras opciones</Texto>
                 <Linea />
             </Lineas>
 
             <Botones>
                 <Boton1>
-                    <BsGoogle color="rgba(0,0,0,0.5)" size="15" />
+                    <BsGoogle color="rgba(0,0,0,0.4)" size="15" />
                     Google
                 </Boton1>
                 <Boton2>
-                    <FaRegUserCircle color="rgba(0,0,0,0.5)" size="15" />
+                    <FaUserPlus color="rgba(0,0,0,0.4)" size="15" />
                     Invitado
                 </Boton2>
             </Botones>
@@ -34,6 +34,7 @@ const OtrosAccesosContainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 40px;
 `;
 
 const Lineas = styled.div`
@@ -49,6 +50,7 @@ const Texto = styled.div`
     white-space: nowrap;
     font-size: 10px;
     text-align: center;
+    color: rgba(0, 0, 0, 0.7);
 `;
 
 const Linea = styled.div`
@@ -79,11 +81,16 @@ const Boton1 = styled.div`
     margin-right: 2px;
     cursor: pointer;
     width: 10em;
-
+    font-weight: bold;
     transition: box-shadow 0.1s;
+    color: rgba(0, 0, 0, 0.4);
 
     :hover {
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.7);
+        color: rgba(0, 0, 0, 0.5);
+        svg {
+            color: rgba(0, 0, 0, 0.5) !important;
+        }
     }
 
     svg {
