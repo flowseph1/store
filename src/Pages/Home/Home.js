@@ -1,7 +1,16 @@
+import { useReducedMotion } from 'framer-motion';
 import React from 'react';
+import { useUserContext } from '../../Services/Context/UserContext';
 
 function Home() {
-    return <div>Home</div>;
+    const { user, logOutUser } = useUserContext();
+
+    return (
+        <div>
+            {user?.displayName}
+            <button onClick={() => logOutUser()}>LogOut</button>
+        </div>
+    );
 }
 
 export default Home;

@@ -8,6 +8,8 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BiLockOpenAlt } from 'react-icons/bi';
 import { BsEye } from 'react-icons/bs';
 import { BsEyeSlash } from 'react-icons/bs';
+import { useUserContext } from '../../Services/Context/UserContext';
+import ReactLoading from 'react-loading';
 
 function RegisterForm({
     onSubmit,
@@ -23,6 +25,7 @@ function RegisterForm({
     comfirmPassword,
     setComfirmPassword,
 }) {
+    const { loading, error } = useUserContext();
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -215,7 +218,15 @@ function RegisterForm({
                         </Validation>
                     )}
                 </div>
-                <input type="submit" value="Registrar" className={validation ? '' : 'disabled'} {...(!validation && 'disabled')} />
+                <BotonContainer>
+                    <input
+                        type="submit"
+                        value={!loading ? 'Registrar' : ' '}
+                        className={validation ? '' : 'disabled'}
+                        disabled={!validation ? true : false}
+                    />
+                    {loading && <ReactLoading type="spin" height={20} width={20} />}
+                </BotonContainer>
             </form>
         </div>
     );
@@ -258,5 +269,18 @@ const Validation = styled.div`
         border-style: solid;
         border-width: 14px 14px 14px 0;
         z-index: -99;
+    }
+`;
+
+const BotonContainer = styled.div`
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+    div {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
     }
 `;

@@ -5,12 +5,13 @@ import Tabs from './Tabs';
 import Logo from './Logo';
 import RegisterForm from './RegisterForm';
 import AccessForm from './AccessForm';
-import { useTransition, animated, useSpring, Spring } from 'react-spring';
+import { animated, useSpring, useTransition } from 'react-spring';
+import { useUserContext } from '../../Services/Context/UserContext';
+import { BiError } from 'react-icons/bi';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 function Login() {
-    const onSubmit = event => {
-        event.preventDefault();
-    };
+    const { registerUser, signInUser, forgetPassword, error, user, success, setSuccess } = useUserContext();
 
     const [selectedTab, setSelectedTab] = useState(true);
     const [showPass, setShowPass] = useState(true);
@@ -19,6 +20,24 @@ function Login() {
     const [password, setPassword] = useState('');
     const [comfirmPassword, setComfirmPassword] = useState('');
     const [validation, setValidation] = useState(false);
+
+    /* Función para el manejo del Registro */
+
+    const onSubmitRegister = event => {
+        event.preventDefault();
+        console.log(event);
+        registerUser(email, name, password);
+    };
+
+    /* Función para el manejo de Ingreso */
+
+    const onSubmitLogin = event => {
+        event.preventDefault();
+        console.log(email, password);
+        email && password ? signInUser(email, password) : console.log(error);
+    };
+
+    /* Validaciones de Formulario de registro */
 
     useEffect(() => {
         const validaciones = () => {
@@ -42,6 +61,8 @@ function Login() {
         validaciones();
     }, [email, name, password, comfirmPassword]);
 
+    /* Estilos de Animaciones */
+
     const style = useSpring({
         opacity: selectedTab ? 1 : 0,
         transform: selectedTab ? 'translate3d(0, 0, 0)' : 'translate3d(30px, 0, 0)',
@@ -54,8 +75,49 @@ function Login() {
         from: { opacity: 0, transform: 'translate3d(30px, 0, 0)' },
     });
 
+    const alertStyle = useSpring({
+        opacity: error || user ? 1 : 0,
+        config: { duration: 500 },
+        reset: true,
+        onRest: () => setSuccess(false),
+    });
+
+    /* Manejo de mensajes de error */
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleError = () => {
+        switch (error) {
+            case 'auth/email-already-in-use':
+                setErrorMessage('Correo ya en uso');
+                break;
+            case 'Firebase: Error (auth/user-not-found).':
+                setErrorMessage('Usuario no encontrado');
+                break;
+            case 'Firebase: Error (auth/wrong-password).':
+                setErrorMessage('Contraseña Incorrecta');
+                break;
+            default:
+                setErrorMessage(error);
+                break;
+        }
+    };
+
+    useEffect(() => {
+        handleError();
+    });
+
     return (
         <LoginContainer>
+            {success || error ? (
+                <Card style={alertStyle} error={error}>
+                    {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
+                    <div>{error ? errorMessage : success}</div>
+                </Card>
+            ) : (
+                ''
+            )}
+
             <LoginHeader>
                 <Logo />
                 <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
@@ -64,7 +126,7 @@ function Login() {
             {selectedTab ? (
                 <FormularioAcceso style={style}>
                     <AccessForm
-                        onSubmit={onSubmit}
+                        onSubmitLogin={onSubmitLogin}
                         email={email}
                         setEmail={setEmail}
                         showPass={showPass}
@@ -76,7 +138,7 @@ function Login() {
             ) : (
                 <FormularioAcceso style={style2}>
                     <RegisterForm
-                        onSubmit={onSubmit}
+                        onSubmit={onSubmitRegister}
                         name={name}
                         setName={setName}
                         email={email}
@@ -116,7 +178,7 @@ const LoginBody = styled.div`
 `;
 const LoginFooter = styled.div``;
 
-const FormularioAcceso = animated(styled.div`
+const FormularioAcceso = styled(animated.div)`
     display: flex;
     flex-direction: row;
     width: 90%;
@@ -173,6 +235,7 @@ const FormularioAcceso = animated(styled.div`
             outline: none;
             border: none;
             margin-left: 1em;
+            background-color: transparent;
         }
 
         .cajaTexto {
@@ -191,9 +254,8 @@ const FormularioAcceso = animated(styled.div`
             background-color: ${process.env.REACT_APP_SECONDARY_COLOR};
             cursor: pointer;
             color: white;
-            margin-top: 10px;
+
             width: 100%;
-            margin-bottom: 5px;
 
             :hover {
                 background-color: ${process.env.REACT_APP_SECONDARY_COLOR_HOVER};
@@ -211,4 +273,22 @@ const FormularioAcceso = animated(styled.div`
             cursor: default !important;
         }
     }
-`);
+`;
+
+const Card = styled(animated.div)`
+    position: absolute;
+    top: 70px;
+    padding: 0.8rem 0.9rem;
+    border-radius: 8px;
+    background-color: ${props => (props.error ? process.env.REACT_APP_ERROR_COLOR : process.env.REACT_APP_SUCCESS_COLOR)};
+    color: ${props => (props.error ? process.env.REACT_APP_ERROR_FONT_COLOR : process.env.REACT_APP_SUCCES_FONT_COLOR)};
+    width: 390px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+
+    svg {
+        margin-right: 5px;
+    }
+`;

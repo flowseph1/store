@@ -23,7 +23,7 @@ const LogoContainer = styled.div`
     div {
         position: absolute;
         bottom: -20px;
-        right: 30px;
+        right: 0px;
         color: ${process.env.REACT_APP_PRIMARY_COLOR};
         letter-spacing: 15px;
         text-align: center;

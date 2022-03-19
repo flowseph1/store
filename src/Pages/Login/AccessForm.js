@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HiOutlineMail } from 'react-icons/hi';
 import { BiLockOpenAlt } from 'react-icons/bi';
 import { BsEye } from 'react-icons/bs';
 import { BsEyeSlash } from 'react-icons/bs';
+import { useUserContext } from '../../Services/Context/UserContext';
+import ReactLoading from 'react-loading';
 
-function AccessForm({ onSubmit, email, setEmail, showPass, setShowPass, password, setPassword }) {
+function AccessForm({ onSubmitLogin, email, setEmail, showPass, setShowPass, password, setPassword }) {
+    const [isValid, setIsValid] = useState(false);
+
+    const { loading } = useUserContext();
+
+    const validationToLogin = () => {
+        RegExp('([\\w-]+)@([a-zA-Z\\d-]+)\\.([a-zA-Z]{2,8})(\\.[a-zA-Z]{2,8})?').test(email) && password.length > 7
+            ? setIsValid(true)
+            : setIsValid(false);
+    };
+
+    useEffect(() => {
+        validationToLogin();
+    }, [email, password]);
+
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmitLogin}>
                 <div className="cajaTexto">
                     <HiOutlineMail />
                     <input
@@ -35,9 +51,10 @@ function AccessForm({ onSubmit, email, setEmail, showPass, setShowPass, password
                         <BsEyeSlash onClick={() => setShowPass(!showPass)} style={{ cursor: 'pointer' }} size={18} />
                     )}
                 </div>
-                <Link to="/home">
-                    <input type="submit" value="Ingresar" />
-                </Link>
+                <BotonContainer>
+                    <input type="submit" value={!loading ? 'Entrar' : ' '} className={isValid ? '' : 'disabled'} disabled={!isValid ? true : false} />
+                    {loading && <ReactLoading type="spin" height={20} width={20} />}
+                </BotonContainer>
                 <ForgetPass>
                     <span>¿Olvido su contraseña?</span>
                 </ForgetPass>
@@ -60,5 +77,18 @@ const ForgetPass = styled.div`
         :hover {
             text-decoration: underline;
         }
+    }
+`;
+
+const BotonContainer = styled.div`
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+    div {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
     }
 `;
