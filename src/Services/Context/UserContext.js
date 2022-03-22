@@ -55,7 +55,6 @@ export const UserContextProvider = ({ children }) => {
                 navigate('/home');
                 setError('');
                 setSuccess('');
-                console.log(res);
             })
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
@@ -63,6 +62,7 @@ export const UserContextProvider = ({ children }) => {
 
     const logOutUser = () => {
         signOut(auth);
+        navigate('/');
     };
     const forgetPassword = email => {
         return sendPasswordResetEmail(auth, email);

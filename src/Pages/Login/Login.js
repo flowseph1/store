@@ -33,7 +33,6 @@ function Login() {
 
     const onSubmitLogin = event => {
         event.preventDefault();
-        console.log(email, password);
         email && password ? signInUser(email, password) : console.log(error);
     };
 
