@@ -55,7 +55,6 @@ function RegisterForm({
                                 <AnimatePresence>
                                     <motion.div
                                         style={{ width: '100%' }}
-                                        key="emailValidation"
                                         initial="enter"
                                         animate="in"
                                         exit="exit"

@@ -189,6 +189,11 @@ const FormularioAcceso = styled(animated.div)`
         display: flex;
         align-items: center;
         position: relative;
+        border-radius: 8px;
+        outline: none;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 0.9em;
+        margin-bottom: 0.5em;
 
         svg {
             color: rgba(0, 0, 0, 0.5);
@@ -235,14 +240,6 @@ const FormularioAcceso = styled(animated.div)`
             border: none;
             margin-left: 1em;
             background-color: transparent;
-        }
-
-        .cajaTexto {
-            border-radius: 8px;
-            outline: none;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            padding: 0.9em;
-            margin-bottom: 0.5em;
         }
 
         input[type='submit'] {

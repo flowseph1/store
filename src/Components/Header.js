@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Logo3 from '../Assets/Images/Logo3.png';
 import { useUserContext } from '../Services/Context/UserContext';
@@ -8,16 +8,25 @@ import { FiSearch } from 'react-icons/fi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineHistory } from 'react-icons/ai';
 import { IoExitOutline } from 'react-icons/io5';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { useSpring, animated, Transition } from 'react-spring';
 
 function Header() {
     const { user, logOutUser } = useUserContext();
+    const [isShowPerfilModal, setIsShowPerfilModal] = useState(false);
+
+    const styles = useSpring({
+        opacity: 1,
+        from: { opacity: 0 },
+        reset: true,
+        config: { duration: 300 },
+    });
 
     return (
         <HeaderContainer>
             <HeaderLeft>
                 <img src={Logo3} alt="" />
             </HeaderLeft>
-            <HeaderCenter></HeaderCenter>
             <HeaderRight>
                 <HeaderNav>
                     <div className="cajaTexto">
@@ -27,40 +36,49 @@ function Header() {
 
                     <BsCart2 size={30} />
                 </HeaderNav>
-                <AvatarContainer>
+                <AvatarContainer onMouseEnter={() => setIsShowPerfilModal(true)} onMouseLeave={() => setIsShowPerfilModal(false)}>
                     <Avatar name={user?.displayName} size={45} round={true} color={'#eeee'} fgColor={process.env.REACT_APP_PRIMARY_COLOR} />
                     <UserSaludo>
                         <span>¡Bienvenido!</span>
                         <h4>{user?.displayName}</h4>
                     </UserSaludo>
-                    <Card>
-                        <ul>
-                            <li>
-                                <div>
-                                    <AiOutlineUser size={20} />
-                                    <span>Perfil</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <BsCart2 size={20} />
-                                    <span>Carrito</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <AiOutlineHistory size={20} />
-                                    <span>Historial</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div onClick={() => logOutUser()}>
-                                    <IoExitOutline size={20} />
-                                    <span>Salir</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </Card>
+
+                    {isShowPerfilModal && (
+                        <Card style={styles}>
+                            <ul>
+                                <li>
+                                    <div>
+                                        <AiOutlineUser size={20} />
+                                        <span>Perfil</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <BsCart2 size={20} />
+                                        <span>Carrito</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <AiOutlineHeart size={20} />
+                                        <span>Favoritos</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <AiOutlineHistory size={20} />
+                                        <span>Historial</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div onClick={() => logOutUser()}>
+                                        <IoExitOutline size={20} />
+                                        <span>Cerrar sesión</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </Card>
+                    )}
                 </AvatarContainer>
             </HeaderRight>
         </HeaderContainer>
@@ -73,15 +91,15 @@ const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    padding: 1rem;
     width: 100%;
     border-bottom: 1px solid #eeee;
 `;
 
 const HeaderLeft = styled.div`
     flex: 0.2;
+    display: flex;
+    justify-content: center;
     img {
-        margin-left: 60px;
         width: 150px;
     }
 `;
@@ -89,17 +107,19 @@ const HeaderCenter = styled.div`
     flex: 0.6;
 `;
 const HeaderRight = styled.div`
-    flex: 0.2;
+    flex: 0.8;
     display: flex;
     justify-content: flex-end;
 `;
 
 const AvatarContainer = styled.div`
+    padding: 1rem;
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-right: 60px;
+    height: 100%;
     min-width: 200px;
 
     :hover {
@@ -128,9 +148,9 @@ const AvatarContainer = styled.div`
     }
 `;
 
-const Card = styled.div`
+const Card = styled(animated.div)`
     position: absolute;
-    bottom: -10px;
+    bottom: 5px;
     left: 0;
     right: 0;
     transform: translate(0%, 100%);
@@ -139,6 +159,7 @@ const Card = styled.div`
     background-color: white;
     display: flex;
     border: 1px solid #eeee;
+    z-index: 99999;
 
     ul {
         margin: 0;
