@@ -1,81 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BsCheck } from 'react-icons/bs';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
+import FiltroProductos from './FiltroProductos';
+import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion';
+import FiltroPrecio from './FiltroPrecio';
 
-function LeftContent() {
+function LeftContent({ showFilters }) {
+    /* Lista de Productos */
+    const [productList, setProductList] = useState([
+        { id: 1, categoria: 'Analítica' },
+        { id: 2, categoria: 'ISaaS', productos: [{ nombre: 'Huntress' }, { nombre: 'Gremlin' }, { nombre: 'Bitninja' }, { nombre: 'Saint' }] },
+        { id: 3, categoria: 'Infraestructura', productos: [{ nombre: 'Oneclick' }, { nombre: 'Avaya Spaces' }, { nombre: 'Avaya CPaaS' }] },
+        { id: 4, categoria: 'PYMES', productos: [{ nombre: 'PSKloud - Factura e Inventario' }] },
+        {
+            id: 5,
+            categoria: 'Gobierno',
+            productos: [
+                { nombre: 'AquaCIS' },
+                { nombre: 'EnergyCIS' },
+                { nombre: 'EcoCIS' },
+                { nombre: 'Field Service' },
+                { nombre: 'GasCIS' },
+                { nombre: 'TelecomBoss' },
+            ],
+        },
+        { id: 6, categoria: 'Soluciones Administrativas', productos: [{ nombre: 'ERP' }, { nombre: 'Recursos Humanos' }] },
+        { id: 7, categoria: 'Banca y Finanzas' },
+    ]);
+
+    const [showProducto, setShowProducto] = useState(true);
+    const [showPrecio, setShowPrecio] = useState(true);
+
     return (
-        <LeftContainer>
-            <FiltroContainer>
-                <TipoProducto>
-                    <h4>Producto</h4>
-                    <div>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="Analítica" id="Analítica" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>Analítica</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="ISaaS" id="ISaaS" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>ISaaS</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="Infraestructura" id="Infraestructura" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>Infraestructura</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="PYMES" id="PYMES" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>PYMES</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="Gobierno" id="Gobierno" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>Gobierno</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="Soluciones_Administrativas" id="Soluciones_Administrativas" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>Soluciones Administrativas</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="Banca_y_Finanzas" id="Banca_y_Finanzas" />
-                                    <div className="customCheck">
-                                        <BsCheck />
-                                    </div>
-                                    <span>Banca y Finanzas</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </TipoProducto>
+        <LeftContainer showFilters={showFilters}>
+            <FiltroContainer showFilters={showFilters}>
+                <AnimateSharedLayout>
+                    <TipoProducto layout>
+                        <motion.div layout className="tituloFiltro" onClick={() => setShowProducto(!showProducto)}>
+                            <motion.h4 layout>Producto</motion.h4>
+                            {!showProducto ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
+                        </motion.div>
+                        <motion.div layout>
+                            <AnimatePresence>
+                                {showProducto && (
+                                    <motion.div key="producto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                        <FiltroProductos productList={productList} />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    </TipoProducto>
+                    <TipoProducto layout>
+                        <motion.div layout className="tituloFiltro" onClick={() => setShowPrecio(!showPrecio)}>
+                            <motion.h4 layout>Precio</motion.h4>
+                            {!showPrecio ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
+                        </motion.div>
+                        <motion.div layout>
+                            <AnimatePresence>
+                                {showPrecio && (
+                                    <motion.div key="precio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                        <FiltroPrecio />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    </TipoProducto>
+                </AnimateSharedLayout>
             </FiltroContainer>
         </LeftContainer>
     );
@@ -84,24 +76,70 @@ function LeftContent() {
 export default LeftContent;
 
 const LeftContainer = styled.div`
-    flex: 0.2;
+    position: relative;
     border-right: 1px solid #eeee;
     display: flex;
     justify-content: center;
+    transition: all 0.3s;
+    min-width: ${props => (props.showFilters ? '317px' : '0px')};
+    width: ${props => (props.showFilters ? 'auto' : '0px')};
+    flex: ${props => (props.showFilters ? '0.2' : '0')};
+    padding: 0 1em;
+    z-index: 9999;
+    background-color: white;
+    height: 100%;
+
+    @media (max-width: 1335px) {
+        flex: 0;
+        position: absolute;
+    }
+
+    .subLista {
+        margin-left: 2em;
+    }
+
+    .tituloFiltro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        cursor: pointer;
+    }
+
+    .tituloSubproducto {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+
+    .subProductLenght {
+        font-size: 0.8em;
+        margin-left: 2em;
+    }
 `;
 
-const FiltroContainer = styled.div`
-    width: 100%;
-    padding: 3em 5em;
+const FiltroContainer = styled(motion.div)`
+    padding: 2em;
+    opacity: ${props => (props.showFilters ? '1' : '0')};
+    transition: all 0.3s;
+    @media (max-width: 1335px) {
+        overflow: hidden;
+    }
 `;
 
-const TipoProducto = styled.div`
+const TipoProducto = styled(motion.div)`
+    padding-top: 1em;
     padding-bottom: 1em;
     border-bottom: 1px solid #eeee;
+    min-width: 220px;
+    max-width: 220px;
+    font-size: 0.8em;
 
     h4 {
         margin: 0;
-        font-size: 1em;
+        font-size: 1.5em !important;
     }
 
     & > div {
@@ -110,7 +148,6 @@ const TipoProducto = styled.div`
             margin: 0;
             padding: 0;
             color: darkGray;
-            font-size: 0.9em;
             white-space: nowrap;
 
             li {
@@ -146,7 +183,7 @@ const TipoProducto = styled.div`
                     input[type='checkbox'] {
                         display: none;
 
-                        :checked ~ div {
+                        :checked ~ .customCheck {
                             background-color: ${process.env.REACT_APP_SECONDARY_COLOR};
                         }
 

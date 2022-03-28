@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsHouseDoor } from 'react-icons/bs';
-import { AiOutlineShopping } from 'react-icons/ai';
 import { GrFormClose } from 'react-icons/gr';
 import CatalogoProductos from './CatalogoProductos';
+import BreadCumbs from '../../Components/BreadCumbs';
 
 function RightContent() {
     return (
@@ -12,17 +11,7 @@ function RightContent() {
                 <CatalogoHeader>
                     <div>
                         <h1>Catalogo</h1>
-                        <Navegador>
-                            <Padre>
-                                <BsHouseDoor />
-                                <div>Principal</div>
-                            </Padre>
-                            <div>{'>'}</div>
-                            <Hijo>
-                                <AiOutlineShopping />
-                                <div>Productos</div>
-                            </Hijo>
-                        </Navegador>
+                        <BreadCumbs />
                         <Tags>
                             <Tag>
                                 <div>Analítica</div>
@@ -48,56 +37,38 @@ function RightContent() {
 export default RightContent;
 
 const RightContainer = styled.div`
-    flex: 0.8;
+    flex: ${props => (props.showFilters ? '0.8' : '1')};
+    display: flex;
+    @media (max-width: 1335px) {
+        flex: 1;
+    }
 `;
 
 const CatalogoContainer = styled.div`
-    padding: 2em 5em;
+    padding: 2rem 5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 `;
 
 const CatalogoHeader = styled.div`
     h1 {
+        font-size: 1.5rem;
         margin: 0;
     }
 `;
 
-const Navegador = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const Padre = styled.div`
-    display: flex;
-    align-items: center;
-    margin-right: 0.5em;
-
-    :hover {
-        cursor: pointer;
-        text-decoration: underline;
-    }
-
-    svg {
-        margin-right: 0.5rem;
-    }
-`;
-
-const Hijo = styled(Padre)`
-    margin-left: 0.5em;
-    color: darkGray;
-`;
-
 const Tags = styled.div`
     width: 100%;
-    margin-top: 2em;
+    margin-top: 1em;
     display: flex;
     flex-direction: row;
 `;
 const Tag = styled.div`
-    padding: 0.5rem;
+    padding: 0.3rem;
     border-radius: 2px;
     background-color: #eee;
-    font-size: 0.7em;
+    font-size: 0.6em;
     margin-right: 1em;
     display: flex;
     justify-content: space-between;

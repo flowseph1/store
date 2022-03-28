@@ -11,6 +11,7 @@ import { BsEyeSlash } from 'react-icons/bs';
 import { useUserContext } from '../../Services/Context/UserContext';
 import ReactLoading from 'react-loading';
 
+/* Pagina de registro recibe todos los parámetros de sus componentes padres */
 function RegisterForm({
     onSubmit,
     name,
@@ -25,9 +26,11 @@ function RegisterForm({
     comfirmPassword,
     setComfirmPassword,
 }) {
+    /* Variables de carga y error importadas del contexto de usuario */
     const { loading, error } = useUserContext();
     return (
         <div>
+            {/* Formulario de Registro */}
             <form onSubmit={onSubmit}>
                 <div className="cajaTexto">
                     <CgRename />
@@ -49,6 +52,7 @@ function RegisterForm({
                         spellCheck="false"
                         autoCapitalize="none"
                     />
+                    {/* Validación de entrada de correo */}
                     {email.length > 0 && (
                         <>
                             <Validation>
@@ -91,13 +95,16 @@ function RegisterForm({
                         onChange={e => setPassword(e.currentTarget.value)}
                         value={password}
                     />
+                    {/* Icono de ocultar o mostrar contraseña */}
                     {!showPass ? (
                         <BsEye onClick={() => setShowPass(!showPass)} style={{ cursor: 'pointer' }} size={18} />
                     ) : (
                         <BsEyeSlash onClick={() => setShowPass(!showPass)} style={{ cursor: 'pointer' }} size={18} />
                     )}
+                    {/* Validación de contraseña */}
                     {password.length > 0 && (
                         <Validation>
+                            {/* Se agregar animación a pestaña de validaciones */}
                             <AnimatePresence>
                                 <motion.div
                                     style={{
@@ -180,6 +187,7 @@ function RegisterForm({
                         onChange={e => setComfirmPassword(e.currentTarget.value)}
                         value={comfirmPassword}
                     />
+                    {/* Validación de confirmar contraseña */}
                     {comfirmPassword.length > 0 && (
                         <Validation>
                             <AnimatePresence>
@@ -199,6 +207,7 @@ function RegisterForm({
                                         exit: { opacity: 0 },
                                     }}
                                 >
+                                    {/* Validación de coincidencia en contraseñas */}
                                     {password === comfirmPassword ? (
                                         <>
                                             <div>
@@ -218,12 +227,14 @@ function RegisterForm({
                     )}
                 </div>
                 <BotonContainer>
+                    {/* Botón se habilita una vez se cumplan con las validaciones */}
                     <input
                         type="submit"
                         value={!loading ? 'Registrar' : ' '}
                         className={validation ? '' : 'disabled'}
                         disabled={!validation ? true : false}
                     />
+                    {/* Circulo de carga en botón */}
                     {loading && <ReactLoading type="spin" height={20} width={20} />}
                 </BotonContainer>
             </form>

@@ -9,6 +9,7 @@ import { animated, useSpring, useTransition } from 'react-spring';
 import { useUserContext } from '../../Services/Context/UserContext';
 import { BiError } from 'react-icons/bi';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { AnimateSharedLayout, motion } from 'framer-motion';
 
 function Login() {
     const { registerUser, signInUser, forgetPassword, error, user, success, setSuccess } = useUserContext();
@@ -107,62 +108,64 @@ function Login() {
     });
 
     return (
-        <LoginContainer>
-            {success || error ? (
-                <Card style={alertStyle} error={error}>
-                    {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
-                    <div>{error ? errorMessage : success}</div>
-                </Card>
-            ) : (
-                ''
-            )}
+        <AnimateSharedLayout>
+            <LoginContainer layout>
+                {success || error ? (
+                    <Card style={alertStyle} error={error}>
+                        {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
+                        <div>{error ? errorMessage : success}</div>
+                    </Card>
+                ) : (
+                    ''
+                )}
 
-            <LoginHeader>
-                <Logo />
-                <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-            </LoginHeader>
+                <LoginHeader>
+                    <Logo />
+                    <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+                </LoginHeader>
 
-            {selectedTab ? (
-                <FormularioAcceso style={style}>
-                    <AccessForm
-                        onSubmitLogin={onSubmitLogin}
-                        email={email}
-                        setEmail={setEmail}
-                        showPass={showPass}
-                        setShowPass={setShowPass}
-                        password={password}
-                        setPassword={setPassword}
-                    />
-                </FormularioAcceso>
-            ) : (
-                <FormularioAcceso style={style2}>
-                    <RegisterForm
-                        onSubmit={onSubmitRegister}
-                        name={name}
-                        setName={setName}
-                        email={email}
-                        setEmail={setEmail}
-                        password={password}
-                        setPassword={setPassword}
-                        showPass={showPass}
-                        setShowPass={setShowPass}
-                        validation={validation}
-                        comfirmPassword={comfirmPassword}
-                        setComfirmPassword={setComfirmPassword}
-                    />
-                </FormularioAcceso>
-            )}
+                {selectedTab ? (
+                    <FormularioAcceso style={style}>
+                        <AccessForm
+                            onSubmitLogin={onSubmitLogin}
+                            email={email}
+                            setEmail={setEmail}
+                            showPass={showPass}
+                            setShowPass={setShowPass}
+                            password={password}
+                            setPassword={setPassword}
+                        />
+                    </FormularioAcceso>
+                ) : (
+                    <FormularioAcceso style={style2}>
+                        <RegisterForm
+                            onSubmit={onSubmitRegister}
+                            name={name}
+                            setName={setName}
+                            email={email}
+                            setEmail={setEmail}
+                            password={password}
+                            setPassword={setPassword}
+                            showPass={showPass}
+                            setShowPass={setShowPass}
+                            validation={validation}
+                            comfirmPassword={comfirmPassword}
+                            setComfirmPassword={setComfirmPassword}
+                        />
+                    </FormularioAcceso>
+                )}
 
-            <LoginFooter>
-                <OtrosAccesos />
-            </LoginFooter>
-        </LoginContainer>
+                <LoginFooter>
+                    <OtrosAccesos />
+                </LoginFooter>
+            </LoginContainer>
+        </AnimateSharedLayout>
     );
 }
 
 export default Login;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled(motion.div)`
     display: flex;
     justify-content: center;
     align-items: center;
