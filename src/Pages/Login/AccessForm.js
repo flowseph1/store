@@ -6,6 +6,7 @@ import { BiLockOpenAlt } from 'react-icons/bi';
 import { BsEye } from 'react-icons/bs';
 import { BsEyeSlash } from 'react-icons/bs';
 import { useUserContext } from '../../Services/Context/UserContext';
+import { motion } from 'framer-motion';
 import ReactLoading from 'react-loading';
 
 function AccessForm({ onSubmitLogin, email, setEmail, showPass, setShowPass, password, setPassword }) {
@@ -24,7 +25,7 @@ function AccessForm({ onSubmitLogin, email, setEmail, showPass, setShowPass, pas
     }, [email, password]);
 
     return (
-        <div>
+        <motion.div>
             <form onSubmit={onSubmitLogin}>
                 <div className="cajaTexto">
                     <HiOutlineMail />
@@ -59,7 +60,7 @@ function AccessForm({ onSubmitLogin, email, setEmail, showPass, setShowPass, pas
                     <span>¿Olvido su contraseña?</span>
                 </ForgetPass>
             </form>
-        </div>
+        </motion.div>
     );
 }
 

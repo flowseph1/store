@@ -29,7 +29,7 @@ function RegisterForm({
     /* Variables de carga y error importadas del contexto de usuario */
     const { loading, error } = useUserContext();
     return (
-        <div>
+        <motion.div>
             {/* Formulario de Registro */}
             <form onSubmit={onSubmit}>
                 <div className="cajaTexto">
@@ -238,7 +238,7 @@ function RegisterForm({
                     {loading && <ReactLoading type="spin" height={20} width={20} />}
                 </BotonContainer>
             </form>
-        </div>
+        </motion.div>
     );
 }
 

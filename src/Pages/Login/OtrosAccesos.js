@@ -82,7 +82,7 @@ const Boton1 = styled.div`
     cursor: pointer;
     width: 10em;
     font-weight: bold;
-    transition: box-shadow 0.1s;
+    transition: box-shadow 0.3s, color 0.3s;
     color: rgba(0, 0, 0, 0.4);
 
     :hover {
@@ -94,6 +94,7 @@ const Boton1 = styled.div`
     }
 
     svg {
+        transition: color 0.3s;
         margin-right: 10px;
     }
 `;

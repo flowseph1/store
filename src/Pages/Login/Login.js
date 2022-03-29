@@ -9,7 +9,7 @@ import { animated, useSpring, useTransition } from 'react-spring';
 import { useUserContext } from '../../Services/Context/UserContext';
 import { BiError } from 'react-icons/bi';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { AnimateSharedLayout, motion } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 
 function Login() {
     const { registerUser, signInUser, forgetPassword, error, user, success, setSuccess } = useUserContext();
@@ -108,24 +108,29 @@ function Login() {
     });
 
     return (
-        <AnimateSharedLayout>
-            <LoginContainer layout>
-                {success || error ? (
-                    <Card style={alertStyle} error={error}>
-                        {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
-                        <div>{error ? errorMessage : success}</div>
-                    </Card>
-                ) : (
-                    ''
-                )}
+        <LoginContainer>
+            {success || error ? (
+                <Card style={alertStyle} error={error}>
+                    {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
+                    <div>{error ? errorMessage : success}</div>
+                </Card>
+            ) : (
+                ''
+            )}
 
-                <LoginHeader>
-                    <Logo />
-                    <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-                </LoginHeader>
+            <LoginHeader layout transition={{ duration: 0.3 }}>
+                <Logo />
+                <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            </LoginHeader>
 
-                {selectedTab ? (
-                    <FormularioAcceso style={style}>
+            {selectedTab ? (
+                <AnimatePresence>
+                    <FormularioAcceso
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ bounce: 0.2 }}
+                    >
                         <AccessForm
                             onSubmitLogin={onSubmitLogin}
                             email={email}
@@ -136,30 +141,35 @@ function Login() {
                             setPassword={setPassword}
                         />
                     </FormularioAcceso>
-                ) : (
-                    <FormularioAcceso style={style2}>
-                        <RegisterForm
-                            onSubmit={onSubmitRegister}
-                            name={name}
-                            setName={setName}
-                            email={email}
-                            setEmail={setEmail}
-                            password={password}
-                            setPassword={setPassword}
-                            showPass={showPass}
-                            setShowPass={setShowPass}
-                            validation={validation}
-                            comfirmPassword={comfirmPassword}
-                            setComfirmPassword={setComfirmPassword}
-                        />
-                    </FormularioAcceso>
-                )}
+                </AnimatePresence>
+            ) : (
+                <FormularioAcceso
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ bounce: 0.2 }}
+                >
+                    <RegisterForm
+                        onSubmit={onSubmitRegister}
+                        name={name}
+                        setName={setName}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
+                        showPass={showPass}
+                        setShowPass={setShowPass}
+                        validation={validation}
+                        comfirmPassword={comfirmPassword}
+                        setComfirmPassword={setComfirmPassword}
+                    />
+                </FormularioAcceso>
+            )}
 
-                <LoginFooter>
-                    <OtrosAccesos />
-                </LoginFooter>
-            </LoginContainer>
-        </AnimateSharedLayout>
+            <LoginFooter layout transition={{ duration: 0.3 }}>
+                <OtrosAccesos />
+            </LoginFooter>
+        </LoginContainer>
     );
 }
 
@@ -174,13 +184,13 @@ const LoginContainer = styled(motion.div)`
     overflow-y: hidden;
 `;
 
-const LoginHeader = styled.div``;
+const LoginHeader = styled(motion.div)``;
 const LoginBody = styled.div`
     width: 100%;
 `;
-const LoginFooter = styled.div``;
+const LoginFooter = styled(motion.div)``;
 
-const FormularioAcceso = styled(animated.div)`
+const FormularioAcceso = styled(motion.div)`
     display: flex;
     flex-direction: row;
     width: 90%;

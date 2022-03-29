@@ -22,6 +22,7 @@ const TabContainer = styled.div`
     margin-bottom: 18px;
     width: 20%;
     min-width: 214px;
+    transition: background-color 0.3s, color 0.3s;
 
     .active {
         background-color: ${process.env.REACT_APP_SECONDARY_COLOR};
@@ -41,11 +42,10 @@ const Tab1 = styled.div`
     margin-right: 2px;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.9);
-
-    transition: box-shadow 0.1s, background-color 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 0.3s ease;
+    transition: box-shadow 0.3s, background-color 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 0.3s ease;
 
     :hover {
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
     }
 `;
 
