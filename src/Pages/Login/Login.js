@@ -5,14 +5,12 @@ import Tabs from './Tabs';
 import Logo from './Logo';
 import RegisterForm from './RegisterForm';
 import AccessForm from './AccessForm';
-import { animated, useSpring, useTransition } from 'react-spring';
 import { useUserContext } from '../../Services/Context/UserContext';
-import { BiError } from 'react-icons/bi';
-import { AiFillCheckCircle } from 'react-icons/ai';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import Alertas from './Alertas';
 
 function Login() {
-    const { registerUser, signInUser, forgetPassword, error, user, success, setSuccess } = useUserContext();
+    const { registerUser, signInUser, forgetPassword, error, user, success, setSuccess, setError } = useUserContext();
 
     const [selectedTab, setSelectedTab] = useState(true);
     const [showPass, setShowPass] = useState(true);
@@ -26,7 +24,6 @@ function Login() {
 
     const onSubmitRegister = event => {
         event.preventDefault();
-        console.log(event);
         registerUser(email, name, password);
     };
 
@@ -61,27 +58,6 @@ function Login() {
         validaciones();
     }, [email, name, password, comfirmPassword]);
 
-    /* Estilos de Animaciones */
-
-    const style = useSpring({
-        opacity: selectedTab ? 1 : 0,
-        transform: selectedTab ? 'translate3d(0, 0, 0)' : 'translate3d(30px, 0, 0)',
-        from: { opacity: 0, transform: 'translate3d(30px, 0, 0)' },
-    });
-
-    const style2 = useSpring({
-        opacity: selectedTab ? 0 : 1,
-        transform: selectedTab ? 'translate3d(30px, 0, 0)' : 'translate3d(0, 0, 0)',
-        from: { opacity: 0, transform: 'translate3d(30px, 0, 0)' },
-    });
-
-    const alertStyle = useSpring({
-        opacity: error || user ? 1 : 0,
-        config: { duration: 500 },
-        reset: true,
-        onRest: () => setSuccess(false),
-    });
-
     /* Manejo de mensajes de error */
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -109,14 +85,10 @@ function Login() {
 
     return (
         <LoginContainer>
-            {success || error ? (
-                <Card style={alertStyle} error={error}>
-                    {error ? <BiError size={15} /> : <AiFillCheckCircle size={15} error={error} />}
-                    <div>{error ? errorMessage : success}</div>
-                </Card>
-            ) : (
-                ''
-            )}
+            <AnimatePresence>
+                {success && <Alertas message={success} type="success" exitOn={setSuccess} />}
+                {error && <Alertas message={errorMessage} type="error" exitOn={setError} />}
+            </AnimatePresence>
 
             <LoginHeader layout transition={{ duration: 0.3 }}>
                 <Logo />
@@ -281,23 +253,5 @@ const FormularioAcceso = styled(motion.div)`
             background-color: rgba(0, 0, 0, 0.5) !important;
             cursor: default !important;
         }
-    }
-`;
-
-const Card = styled(animated.div)`
-    position: absolute;
-    top: 70px;
-    padding: 0.8rem 0.9rem;
-    border-radius: 8px;
-    background-color: ${props => (props.error ? process.env.REACT_APP_ERROR_COLOR : process.env.REACT_APP_SUCCESS_COLOR)};
-    color: ${props => (props.error ? process.env.REACT_APP_ERROR_FONT_COLOR : process.env.REACT_APP_SUCCES_FONT_COLOR)};
-    width: 390px;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-
-    svg {
-        margin-right: 5px;
     }
 `;

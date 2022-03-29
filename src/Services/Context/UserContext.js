@@ -72,6 +72,7 @@ export const UserContextProvider = ({ children }) => {
         user,
         loading,
         error,
+        setError,
         registerUser,
         signInUser,
         logOutUser,
