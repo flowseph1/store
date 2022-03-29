@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../Components/Header';
 import styled from 'styled-components';
 import LeftProductContent from './LeftProductContent';
@@ -25,6 +25,7 @@ export default Producto;
 
 const ProductoContainer = styled.div`
     height: 100vh;
+    position: relative;
     overflow: hidden;
 
     .BreadCumbsContainer {

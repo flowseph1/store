@@ -148,7 +148,7 @@ const ProductoBotones = styled.div`
         border-radius: 8px;
         color: white;
         border: 1px solid #eee;
-        padding: 1em 1.5em;
+        padding: 0.8em;
         flex: 0.7;
         display: flex;
         justify-content: center;
