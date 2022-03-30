@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import LeftProductContent from './LeftProductContent';
 import RitghtProductContent from './RitghtProductContent';
 import BreadCumbs from '../../Components/BreadCumbs';
+import { motion } from 'framer-motion';
 
 function Producto() {
     return (
-        <ProductoContainer>
+        <ProductoContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Header />
             <div className="BreadCumbsContainer">
                 <h2>Detalle Producto</h2>
@@ -23,7 +24,7 @@ function Producto() {
 
 export default Producto;
 
-const ProductoContainer = styled.div`
+const ProductoContainer = styled(motion.div)`
     height: 100vh;
     position: relative;
     overflow: hidden;
