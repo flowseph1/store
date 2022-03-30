@@ -6,13 +6,10 @@ import { useUserContext } from '../Services/Context/UserContext';
 import Avatar from 'react-avatar';
 import { BsCart2 } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
-import { AiOutlineUser } from 'react-icons/ai';
-import { AiOutlineHistory } from 'react-icons/ai';
-import { IoExitOutline } from 'react-icons/io5';
-import { AiOutlineHeart } from 'react-icons/ai';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useSpring, animated, Transition } from 'react-spring';
 import { AnimatePresence, motion } from 'framer-motion';
+import UserOptions from './UserOptions';
 
 function Header({ setShowFilters, showFilters }) {
     /* Variables de usuario importadas desde el contexto de usuario */
@@ -66,42 +63,7 @@ function Header({ setShowFilters, showFilters }) {
 
                     <AnimatePresence>
                         {/* Modal de tarjeta de Usuario con opciones */}
-                        {isShowPerfilModal && (
-                            <Card initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <AiOutlineUser size={20} />
-                                            <span>Perfil</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <BsCart2 size={20} />
-                                            <span>Carrito</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <AiOutlineHeart size={20} />
-                                            <span>Favoritos</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <AiOutlineHistory size={20} />
-                                            <span>Historial</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div onClick={() => logOutUser()}>
-                                            <IoExitOutline size={20} />
-                                            <span>Cerrar sesión</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </Card>
-                        )}
+                        {isShowPerfilModal && <UserOptions logOutUser={logOutUser} />}
                     </AnimatePresence>
                 </AvatarContainer>
             </HeaderRight>
@@ -203,55 +165,6 @@ const AvatarContainer = styled.div`
 
         @media (max-width: 920px) {
             display: none;
-        }
-    }
-`;
-
-const Card = styled(motion.div)`
-    position: absolute;
-    bottom: 1px;
-    left: 0;
-    right: 0;
-    transform: translate(0%, 100%);
-    padding: 1rem;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-top: 0px !important;
-    background-color: white;
-    display: flex;
-    border: 1px solid #eeee;
-    z-index: 99999;
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        font-size: 12px;
-        width: 100%;
-
-        li {
-            width: 100%;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-
-            :hover {
-                background-color: #eeee;
-            }
-
-            div {
-                display: flex;
-                align-items: center;
-                padding: 1em;
-
-                svg {
-                    margin-right: 1em;
-
-                    @media (max-width: 920px) {
-                        display: none;
-                    }
-                }
-            }
         }
     }
 `;

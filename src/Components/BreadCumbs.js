@@ -25,7 +25,7 @@ const BreadCumbContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 `;
 
 const Padre = styled.div`

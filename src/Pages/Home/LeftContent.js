@@ -33,43 +33,52 @@ function LeftContent({ showFilters }) {
     const [showProducto, setShowProducto] = useState(true);
     const [showPrecio, setShowPrecio] = useState(true);
 
+    const sideBar = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: showFilters ? 1 : 0,
+            hidden: showFilters ? 'visible' : 'hidden',
+            x: showFilters ? 0 : -20,
+        },
+    };
+
     return (
-        <LeftContainer showFilters={showFilters}>
-            <FiltroContainer layout showFilters={showFilters}>
+        <AnimatePresence>
+            <LeftContainer animate={{ flex: showFilters ? 0.2 : 0.00000001, width: showFilters ? '317px' : 0 }}>
                 <AnimateSharedLayout>
-                    <TipoProducto layout>
-                        <motion.div layout className="tituloFiltro" onClick={() => setShowProducto(!showProducto)}>
-                            <motion.h4>Producto</motion.h4>
-                            {!showProducto ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
-                        </motion.div>
-                        <motion.div layout>
+                    <FiltroContainer layout initial="hidden" animate="visible" variants={sideBar}>
+                        <TipoProducto key="producto" layout>
+                            <motion.div layout className="tituloFiltro" onClick={() => setShowProducto(!showProducto)}>
+                                <motion.h4>Producto</motion.h4>
+                                {!showProducto ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
+                            </motion.div>
                             <AnimatePresence>
                                 {showProducto && (
-                                    <motion.div key="producto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                        <FiltroProductos productList={productList} />
+                                    <motion.div layout key="producto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                        <FiltroProductos layout productList={productList} />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
-                        </motion.div>
-                    </TipoProducto>
-                    <TipoProducto layout>
-                        <motion.div layout className="tituloFiltro" onClick={() => setShowPrecio(!showPrecio)}>
-                            <motion.h4 layout>Precio</motion.h4>
-                            {!showPrecio ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
-                        </motion.div>
-                        <motion.div layout>
-                            <AnimatePresence>
-                                {showPrecio && (
-                                    <motion.div key="precio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                        <FiltroPrecio />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </motion.div>
-                    </TipoProducto>
+                        </TipoProducto>
+                        <TipoProducto key="precio" layout>
+                            <motion.div layout className="tituloFiltro" onClick={() => setShowPrecio(!showPrecio)}>
+                                <motion.h4 layout>Precio</motion.h4>
+                                {!showPrecio ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
+                            </motion.div>
+                            <motion.div layout>
+                                <AnimatePresence>
+                                    {showPrecio && (
+                                        <motion.div key="precio" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                            <FiltroPrecio />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        </TipoProducto>
+                    </FiltroContainer>
                 </AnimateSharedLayout>
-            </FiltroContainer>
-        </LeftContainer>
+            </LeftContainer>
+        </AnimatePresence>
     );
 }
 
@@ -81,9 +90,6 @@ const LeftContainer = styled(motion.div)`
     display: flex;
     justify-content: center;
     transition: all 0.3s;
-    min-width: ${props => (props.showFilters ? '317px' : '0px')};
-    width: ${props => (props.showFilters ? 'auto' : '0px')};
-    flex: ${props => (props.showFilters ? '0.2' : '0')};
     padding: 0 1em;
     z-index: 9999;
     background-color: white;
@@ -122,8 +128,6 @@ const LeftContainer = styled(motion.div)`
 
 const FiltroContainer = styled(motion.div)`
     padding: 2em;
-    opacity: ${props => (props.showFilters ? '1' : '0')};
-    transition: all 0.3s;
     @media (max-width: 1335px) {
         overflow: hidden;
     }
