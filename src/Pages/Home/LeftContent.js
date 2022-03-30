@@ -35,11 +35,11 @@ function LeftContent({ showFilters }) {
 
     return (
         <LeftContainer showFilters={showFilters}>
-            <FiltroContainer showFilters={showFilters}>
+            <FiltroContainer layout showFilters={showFilters}>
                 <AnimateSharedLayout>
                     <TipoProducto layout>
                         <motion.div layout className="tituloFiltro" onClick={() => setShowProducto(!showProducto)}>
-                            <motion.h4 layout>Producto</motion.h4>
+                            <motion.h4>Producto</motion.h4>
                             {!showProducto ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
                         </motion.div>
                         <motion.div layout>
@@ -75,7 +75,7 @@ function LeftContent({ showFilters }) {
 
 export default LeftContent;
 
-const LeftContainer = styled.div`
+const LeftContainer = styled(motion.div)`
     position: relative;
     border-right: 1px solid #eeee;
     display: flex;

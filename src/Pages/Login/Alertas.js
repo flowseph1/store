@@ -12,7 +12,7 @@ function Alertas({ message, type, exitOn }) {
     };
 
     return (
-        <AlertContainer type={type} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onAnimationComplete={() => handleExit()}>
+        <AlertContainer type={type} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onAnimationEnd={() => handleExit()}>
             {type === 'error' ? <BiError size={15} /> : <AiFillCheckCircle size={15} />}
             <div>{message}</div>
         </AlertContainer>
