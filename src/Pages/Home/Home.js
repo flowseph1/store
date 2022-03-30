@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../Components/Header';
@@ -23,7 +23,7 @@ function Home() {
 
     return (
         /* Contenedor de pagina Home */
-        <HomeContainer>
+        <HomeContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <AnimatePresence>{isLoading && <LoadingPage />}</AnimatePresence>
 
             {/* Header */}
@@ -36,7 +36,7 @@ function Home() {
 
 export default Home;
 
-const HomeContainer = styled.div`
+const HomeContainer = styled(motion.div)`
     position: relative;
     display: flex;
     flex-direction: column;

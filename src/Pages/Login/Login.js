@@ -84,7 +84,7 @@ function Login() {
     });
 
     return (
-        <LoginContainer>
+        <LoginContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <AnimatePresence>
                 {success && <Alertas message={success} type="success" exitOn={setSuccess} />}
                 {error && <Alertas message={errorMessage} type="error" exitOn={setError} />}
