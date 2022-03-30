@@ -10,14 +10,13 @@ function Producto() {
     return (
         <ProductoContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Header />
-            <div className="BreadCumbsContainer">
-                <h2>Detalle Producto</h2>
-                <BreadCumbs />
-            </div>
-            <ProductoContent>
-                <LeftProductContent />
-                <RitghtProductContent />
-            </ProductoContent>
+            <ProductDetailContainer>
+                <BreadCumbs titulo="Producto" />
+                <ProductoContent>
+                    <LeftProductContent />
+                    <RitghtProductContent />
+                </ProductoContent>
+            </ProductDetailContainer>
         </ProductoContainer>
     );
 }
@@ -28,12 +27,6 @@ const ProductoContainer = styled(motion.div)`
     height: 100vh;
     position: relative;
     overflow: hidden;
-
-    .BreadCumbsContainer {
-        width: 100%;
-        padding: 2em 0;
-        margin-left: 20%;
-    }
 
     h2 {
         font-size: 1.5em;
@@ -52,4 +45,9 @@ const ProductoContent = styled.div`
             background-color: #eeee;
         }
     }
+`;
+
+const ProductDetailContainer = styled(motion.div)`
+    margin-left: 20%;
+    margin-right: 20%;
 `;

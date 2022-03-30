@@ -10,8 +10,7 @@ function RightContent() {
             <CatalogoContainer>
                 <CatalogoHeader>
                     <div>
-                        <h1>Catalogo</h1>
-                        <BreadCumbs />
+                        <BreadCumbs titulo="Catalogo" />
                         <Tags>
                             <Tag>
                                 <div>Analítica</div>
@@ -51,12 +50,7 @@ const CatalogoContainer = styled.div`
     flex-direction: column;
 `;
 
-const CatalogoHeader = styled.div`
-    h1 {
-        font-size: 1.5rem;
-        margin: 0;
-    }
-`;
+const CatalogoHeader = styled.div``;
 
 const Tags = styled.div`
     width: 100%;

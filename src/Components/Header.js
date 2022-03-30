@@ -10,6 +10,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { useSpring, animated, Transition } from 'react-spring';
 import { AnimatePresence, motion } from 'framer-motion';
 import UserOptions from './UserOptions';
+import { useLocation } from 'react-router-dom';
 
 function Header({ setShowFilters, showFilters }) {
     /* Variables de usuario importadas desde el contexto de usuario */
@@ -31,6 +32,9 @@ function Header({ setShowFilters, showFilters }) {
         setWidowWidth(window.innerWidth);
     };
 
+    /* Varibale para obtener ruta actual */
+    const location = useLocation();
+
     /* EventListener para cambiar variable de windowWidth cuando el ancho de la pantalla cambie */
     useEffect(() => {
         window.addEventListener('resize', handleWindowWidth);
@@ -40,7 +44,7 @@ function Header({ setShowFilters, showFilters }) {
     return (
         <HeaderContainer>
             <HeaderLeft>
-                <AiOutlineMenu color="darkGray" size={25} onClick={() => setShowFilters(!showFilters)} />
+                {location.pathname === '/home' && <AiOutlineMenu color="darkGray" size={25} onClick={() => setShowFilters(!showFilters)} />}
                 {windowWidth <= 745 ? <img src={logoFavIcon} alt="" className="favIcon" /> : <img src={Logo3} alt="" className="logoCompleto" />}
             </HeaderLeft>
             <HeaderRight>
@@ -125,6 +129,7 @@ const AvatarContainer = styled.div`
     height: 100%;
     min-width: 200px;
     border-left: 1px solid #eeee;
+    cursor: pointer;
 
     @media (max-width: 920px) {
         min-width: 100px;

@@ -9,8 +9,15 @@ import { BsCart2 } from 'react-icons/bs';
 import { motion } from 'framer-motion';
 
 function UserOptions({ logOutUser }) {
+    const optionsTransitions = {
+        start: { opacity: 0, y: 260 },
+        animate: { opacity: 1, y: 250 },
+        exit: { opacity: 0 },
+        transition: { type: 'spring', stiffness: 500, damping: 50 },
+    };
+
     return (
-        <UserOptionContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <UserOptionContainer initial="start" animate="animate" exit="exit" transition="transition" variants={optionsTransitions}>
             <ul>
                 <li>
                     <div>

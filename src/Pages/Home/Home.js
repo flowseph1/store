@@ -24,7 +24,7 @@ function Home() {
     return (
         /* Contenedor de pagina Home */
         <HomeContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <AnimatePresence>{isLoading && <LoadingPage />}</AnimatePresence>
+            <AnimatePresence initial={false}>{isLoading && <LoadingPage />}</AnimatePresence>
 
             {/* Header */}
             <Header user={user} setShowFilters={setShowFilters} showFilters={showFilters} />

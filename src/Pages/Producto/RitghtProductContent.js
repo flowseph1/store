@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { RiShoppingBag3Line } from 'react-icons/ri';
+import { useNavigate } from 'react-router';
 
 function RitghtProductContent() {
     const [isFavorite, setIsFavorite] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <RightProductContainer>
@@ -33,11 +35,11 @@ function RitghtProductContent() {
                 <div className="precioContainer">
                     <div className="estiloPrecio">
                         <div className="label">Precio</div>
-                        <div className="dolares">$3500&nbsp;</div>
-                        <div className="lempira">/ L. 15,000</div>
+                        <div className="dolares">$0&nbsp;</div>
+                        <div className="lempira">/ L.0</div>
                     </div>
                 </div>
-                <div className="btnCarrito">
+                <div className="btnCarrito" onClick={() => navigate('/carrito')}>
                     <RiShoppingBag3Line size={20} />
                     Agregar al Carro
                 </div>

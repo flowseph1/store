@@ -11,26 +11,26 @@ import { useNavigate } from 'react-router-dom';
 function CatalogoProductos() {
     /* Arreglo de los productos */
     const [productos, setProductos] = useState([
-        { codigoVenta: 1, nombre: 'SAS', description: 'Líder en analítica de datos desde hace 40 años.', img: sas, precioMin: 2300, precioMax: 3000 },
-        { codigoVenta: 2, nombre: 'OneClick', description: 'Líder en Infraestructura', img: oneClick, precioMin: 500, precioMax: 1200 },
-        { codigoVenta: 3, nombre: 'Huntress', description: 'Plataforma de Seguridad', img: huntress, precioMin: 600, precioMax: 800 },
+        { codigoVenta: 1, nombre: 'SAS', description: 'Líder en analítica de datos desde hace 40 años.', img: sas, precioMin: 0, precioMax: 0 },
+        { codigoVenta: 2, nombre: 'OneClick', description: 'Líder en Infraestructura', img: oneClick, precioMin: 0, precioMax: 0 },
+        { codigoVenta: 3, nombre: 'Huntress', description: 'Plataforma de Seguridad', img: huntress, precioMin: 0, precioMax: 0 },
         {
             codigoVenta: 4,
             nombre: 'Gremlin',
             description: 'La plataforma de ingeniería del caos más completa',
             img: gremlin,
-            precioMin: 1200,
-            precioMax: 5400,
+            precioMin: 0,
+            precioMax: 0,
         },
         {
             codigoVenta: 5,
             nombre: 'Bitninja',
             description: 'La única plataforma de ciberseguridad que necesita',
             img: bitninja,
-            precioMin: 2000,
-            precioMax: 2200,
+            precioMin: 0,
+            precioMax: 0,
         },
-        { codigoVenta: 6, nombre: 'Huntress', description: 'Plataforma de Seguridad', img: huntress, precioMin: 2600, precioMax: 3000 },
+        { codigoVenta: 6, nombre: 'Huntress', description: 'Plataforma de Seguridad', img: huntress, precioMin: 0, precioMax: 0 },
     ]);
 
     /* Arreglo de lista de Favoritos */
