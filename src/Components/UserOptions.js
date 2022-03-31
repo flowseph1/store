@@ -5,10 +5,12 @@ import { AiOutlineHistory } from 'react-icons/ai';
 import { IoExitOutline } from 'react-icons/io5';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BsCart2 } from 'react-icons/bs';
-
+import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
 function UserOptions({ logOutUser }) {
+    const navigate = useNavigate();
+
     const optionsTransitions = {
         start: { opacity: 0, y: 260 },
         animate: { opacity: 1, y: 250 },
@@ -19,7 +21,7 @@ function UserOptions({ logOutUser }) {
     return (
         <UserOptionContainer initial="start" animate="animate" exit="exit" transition="transition" variants={optionsTransitions}>
             <ul>
-                <li>
+                <li onClick={() => navigate('/perfil')}>
                     <div>
                         <AiOutlineUser size={20} />
                         <span>Perfil</span>

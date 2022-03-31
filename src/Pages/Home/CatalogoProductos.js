@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import sas from '../../Assets/Images/sas.png';
 import oneClick from '../../Assets/Images/onClick.png';
@@ -6,7 +6,6 @@ import huntress from '../../Assets/Images/huntress.png';
 import gremlin from '../../Assets/Images/gremlin.png';
 import bitninja from '../../Assets/Images/bitninja.png';
 import ItemProduct from './ItemProduct';
-import { useNavigate } from 'react-router-dom';
 
 function CatalogoProductos() {
     /* Arreglo de los productos */

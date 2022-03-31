@@ -50,4 +50,8 @@ const ProductoContent = styled.div`
 const ProductDetailContainer = styled(motion.div)`
     margin-left: 20%;
     margin-right: 20%;
+
+    @media (max-width: 1530px) {
+        margin: 0 10%;
+    }
 `;
