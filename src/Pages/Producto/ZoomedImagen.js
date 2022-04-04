@@ -24,7 +24,7 @@ function ZoomedImagen({ imgs, isZoomed, setIsZoomed }) {
 
     return (
         <ZoomedImageContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            <div className="zoomedContainer">
+            <motion.div className="zoomedContainer" initial={{ y: 150 }} animate={{ y: 0 }} transition={{ duration: 0.1 }}>
                 <div className="zoomedTitulo">
                     <h1>Imagen amplia</h1>
                     <GrClose onClick={() => setIsZoomed(null)} />
@@ -39,7 +39,7 @@ function ZoomedImagen({ imgs, isZoomed, setIsZoomed }) {
                 <div className="arrowRight arrows" onClick={() => handleImgNext()}>
                     <IoIosArrowForward size={25} />
                 </div>
-            </div>
+            </motion.div>
         </ZoomedImageContainer>
     );
 }
@@ -56,8 +56,8 @@ const ZoomedImageContainer = styled(motion.div)`
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.5);
     user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
 
     .zoomedContainer {
         position: relative;
@@ -70,6 +70,7 @@ const ZoomedImageContainer = styled(motion.div)`
         align-items: center;
         flex-direction: column;
         border: 1px solid #eeee;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
         .arrows {
             cursor: pointer;

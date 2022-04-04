@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import sas from '../../Assets/Images/sas.png';
 import oneClick from '../../Assets/Images/onClick.png';
@@ -6,6 +6,9 @@ import huntress from '../../Assets/Images/huntress.png';
 import gremlin from '../../Assets/Images/gremlin.png';
 import bitninja from '../../Assets/Images/bitninja.png';
 import ItemProduct from './ItemProduct';
+import { db } from '../../Services/Firebase/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 function CatalogoProductos() {
     /* Arreglo de los productos */
@@ -34,6 +37,28 @@ function CatalogoProductos() {
 
     /* Arreglo de lista de Favoritos */
     const [favoriteList, setFavoriteList] = useState([]);
+
+    const categoryCollectionRef = collection(db, 'Categorias');
+
+    /* Obtener la categoría y los productos por cada categoría */
+    useEffect(() => {
+        const getProducts = async () => {
+            const data = await getDocs(categoryCollectionRef);
+
+            const CategoryAndProducts = data.docs.map(async doc => {
+                let productRef = collection(db, `Categorias/${doc.id}/Productos`);
+                let data2 = await getDocs(productRef);
+                let Productos = data2.docs.map(doc2 => ({ ...doc2.data(), id: doc2.id }));
+                let categoryAndProducts = { ...doc.data(), Productos };
+                return categoryAndProducts;
+            });
+
+            const productos = (await Promise.all(CategoryAndProducts)).map(value => value);
+            console.log(productos);
+        };
+
+        getProducts();
+    }, []);
 
     return (
         <CatalogoContainer>

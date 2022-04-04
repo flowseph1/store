@@ -302,7 +302,7 @@ function Perfil() {
                     <PerfilRightBox>
                         <div className="perfilTop">
                             <div className="perfilTop__img">
-                                <FaUser size={130} />
+                                <FaUser size={100} />
                                 <div className="perfilTop__img__button">
                                     <HiOutlinePencil />
                                 </div>
@@ -502,8 +502,9 @@ const PerfilRightBox = styled(motion.div)`
         .perfilTop__img {
             position: relative;
             background-color: #eeee;
-            width: 10em;
-            height: 10em;
+            width: 9em;
+            height: 9em;
+            border-radius: 8px;
             margin-right: 2em;
             display: flex;
             justify-content: center;
@@ -523,6 +524,11 @@ const PerfilRightBox = styled(motion.div)`
                 right: 10px;
                 cursor: pointer;
                 color: darkGray;
+                transition: box-shadow 0.3s;
+
+                :hover {
+                    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                }
             }
         }
 

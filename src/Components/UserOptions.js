@@ -70,6 +70,7 @@ const UserOptionContainer = styled(motion.div)`
     display: flex;
     border: 1px solid #eeee;
     z-index: 99999;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
     ul {
         margin: 0;

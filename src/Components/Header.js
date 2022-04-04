@@ -11,6 +11,7 @@ import { useSpring, animated, Transition } from 'react-spring';
 import { AnimatePresence, motion } from 'framer-motion';
 import UserOptions from './UserOptions';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 function Header({ setShowFilters, showFilters }) {
     /* Variables de usuario importadas desde el contexto de usuario */
@@ -41,11 +42,18 @@ function Header({ setShowFilters, showFilters }) {
         return () => window.removeEventListener('resize', handleWindowWidth);
     }, [handleWindowWidth]);
 
+    /* Variable de navegación */
+    const navigate = useNavigate();
+
     return (
         <HeaderContainer>
             <HeaderLeft>
                 {location.pathname === '/home' && <AiOutlineMenu color="darkGray" size={25} onClick={() => setShowFilters(!showFilters)} />}
-                {windowWidth <= 745 ? <img src={logoFavIcon} alt="" className="favIcon" /> : <img src={Logo3} alt="" className="logoCompleto" />}
+                {windowWidth <= 745 ? (
+                    <img src={logoFavIcon} alt="" className="favIcon" onClick={() => navigate('/home')} />
+                ) : (
+                    <img src={Logo3} alt="" className="logoCompleto" onClick={() => navigate('/home')} />
+                )}
             </HeaderLeft>
             <HeaderRight>
                 <HeaderNav>
@@ -104,9 +112,12 @@ const HeaderLeft = styled.div`
 
     .logoCompleto {
         width: 150px;
+        cursor: pointer;
     }
 
     .favIcon {
+        cursor: pointer;
+
         width: 40px !important;
     }
 `;
