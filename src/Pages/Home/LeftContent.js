@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
@@ -7,32 +7,11 @@ import { IoIosArrowDroprightCircle } from 'react-icons/io';
 import { AnimatePresence, motion, AnimateSharedLayout } from 'framer-motion';
 import FiltroPrecio from './FiltroPrecio';
 
-function LeftContent({ showFilters }) {
-    /* Lista de Productos */
-    const [productList, setProductList] = useState([
-        { id: 1, categoria: 'Analítica' },
-        { id: 2, categoria: 'ISaaS', productos: [{ nombre: 'Huntress' }, { nombre: 'Gremlin' }, { nombre: 'Bitninja' }, { nombre: 'Saint' }] },
-        { id: 3, categoria: 'Infraestructura', productos: [{ nombre: 'Oneclick' }, { nombre: 'Avaya Spaces' }, { nombre: 'Avaya CPaaS' }] },
-        { id: 4, categoria: 'PYMES', productos: [{ nombre: 'PSKloud - Factura e Inventario' }] },
-        {
-            id: 5,
-            categoria: 'Gobierno',
-            productos: [
-                { nombre: 'AquaCIS' },
-                { nombre: 'EnergyCIS' },
-                { nombre: 'EcoCIS' },
-                { nombre: 'Field Service' },
-                { nombre: 'GasCIS' },
-                { nombre: 'TelecomBoss' },
-            ],
-        },
-        { id: 6, categoria: 'Soluciones Administrativas', productos: [{ nombre: 'ERP' }, { nombre: 'Recursos Humanos' }] },
-        { id: 7, categoria: 'Banca y Finanzas' },
-    ]);
-
+function LeftContent({ showFilters, categorias, filtrosProductos, setfiltrosProductos }) {
     const [showProducto, setShowProducto] = useState(true);
     const [showPrecio, setShowPrecio] = useState(true);
 
+    /* Variantes de animación para el filtro de productos */
     const sideBar = {
         hidden: { opacity: 0 },
         visible: {
@@ -47,7 +26,7 @@ function LeftContent({ showFilters }) {
             <LeftContainer animate={{ flex: showFilters ? 0.2 : 0.00000001, width: showFilters ? '317px' : 0 }}>
                 <AnimateSharedLayout>
                     <FiltroContainer layout initial="hidden" animate="visible" variants={sideBar}>
-                        <TipoProducto key="producto" layout>
+                        <TipoProducto key="producto">
                             <motion.div layout className="tituloFiltro" onClick={() => setShowProducto(!showProducto)}>
                                 <motion.h4>Producto</motion.h4>
                                 {!showProducto ? <MdOutlineKeyboardArrowDown /> : <MdOutlineKeyboardArrowUp />}
@@ -55,7 +34,12 @@ function LeftContent({ showFilters }) {
                             <AnimatePresence>
                                 {showProducto && (
                                     <motion.div layout key="producto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                        <FiltroProductos layout productList={productList} />
+                                        <FiltroProductos
+                                            layout
+                                            categorias={categorias}
+                                            filtrosProductos={filtrosProductos}
+                                            setfiltrosProductos={setfiltrosProductos}
+                                        />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -168,7 +152,7 @@ const TipoProducto = styled(motion.div)`
                     }
 
                     :hover {
-                        color: rgba(0, 0, 0, 0.6);
+                        color: rgba(0, 0, 0, 0.7);
                     }
 
                     .customCheck {

@@ -1,34 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { GrFormClose } from 'react-icons/gr';
 import CatalogoProductos from './CatalogoProductos';
 import BreadCumbs from '../../Components/BreadCumbs';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
-function RightContent() {
+function RightContent({ categorias, filtrosProductos, setfiltrosProductos }) {
+    const [filtroProducto, setFiltroProducto] = useState([]);
+
+    /* Filtro para mostrar solo los productos chequeados. */
+    useEffect(() => {
+        const filters = filtrosProductos.filter(producto => {
+            return producto.active == true;
+        });
+        setFiltroProducto(filters);
+    }, [filtrosProductos]);
+
     return (
         <RightContainer>
-            <CatalogoContainer>
-                <CatalogoHeader>
-                    <div>
-                        <BreadCumbs titulo="Catalogo" />
-                        <Tags>
-                            <Tag>
-                                <div>Analítica</div>
-                                <div>
-                                    <GrFormClose size={17} />
-                                </div>
-                            </Tag>
-                            <Tag>
-                                <div>Infraestructura</div>
-                                <div>
-                                    <GrFormClose size={17} />
-                                </div>
-                            </Tag>
-                        </Tags>
-                    </div>
-                </CatalogoHeader>
-                <CatalogoProductos />
-            </CatalogoContainer>
+            <AnimateSharedLayout>
+                <CatalogoContainer layout>
+                    <CatalogoHeader>
+                        <div>
+                            <BreadCumbs titulo="Catalogo" />
+                            <Tags layout>
+                                <AnimatePresence>
+                                    {filtroProducto.map(filtros => {
+                                        return (
+                                            <Tag key={filtros.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                                <div>{filtros.nombre}</div>
+                                                <div>
+                                                    <GrFormClose size={17} />
+                                                </div>
+                                            </Tag>
+                                        );
+                                    })}
+                                </AnimatePresence>
+                            </Tags>
+                        </div>
+                    </CatalogoHeader>
+                    <CatalogoProductos categorias={categorias} layout />
+                </CatalogoContainer>
+            </AnimateSharedLayout>
         </RightContainer>
     );
 }
@@ -43,22 +56,22 @@ const RightContainer = styled.div`
     }
 `;
 
-const CatalogoContainer = styled.div`
+const CatalogoContainer = styled(motion.div)`
     padding: 2rem 5rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 `;
 
-const CatalogoHeader = styled.div``;
+const CatalogoHeader = styled(motion.div)``;
 
-const Tags = styled.div`
+const Tags = styled(motion.div)`
     width: 100%;
     margin-top: 1em;
     display: flex;
     flex-direction: row;
 `;
-const Tag = styled.div`
+const Tag = styled(motion.div)`
     padding: 0.3rem;
     border-radius: 2px;
     background-color: #eee;

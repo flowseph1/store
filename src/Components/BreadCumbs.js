@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { BsHouseDoor } from 'react-icons/bs';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function BreadCumbs({ titulo, padre, hijo }) {
     const location = useLocation();
     return (
-        <BreadCumbContainer location={location.pathname}>
+        <BreadCumbContainer location={location.pathname} layout>
             <h1>{titulo}</h1>
             <div className="breadCumb">
                 <Padre>
@@ -26,7 +27,7 @@ function BreadCumbs({ titulo, padre, hijo }) {
 
 export default BreadCumbs;
 
-const BreadCumbContainer = styled.div`
+const BreadCumbContainer = styled(motion.div)`
     display: flex;
     flex-direction: column;
     font-size: 0.8rem;

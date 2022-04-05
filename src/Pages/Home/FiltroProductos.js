@@ -1,11 +1,16 @@
-import React from 'react';
-import ItemProducto from './ItemProducto';
+import React, { useEffect } from 'react';
+import ListaProducto from './ListaProducto';
 
-function FiltroProductos({ productList }) {
+function FiltroProductos({ categorias, filtrosProductos, setfiltrosProductos }) {
     return (
         <ul>
-            {productList.map((producto, index) => (
-                <ItemProducto producto={producto} key={index} />
+            {categorias.map((categoria, index) => (
+                <ListaProducto
+                    categoria={categoria}
+                    key={categoria.categoryId}
+                    filtrosProductos={filtrosProductos}
+                    setfiltrosProductos={setfiltrosProductos}
+                />
             ))}
         </ul>
     );

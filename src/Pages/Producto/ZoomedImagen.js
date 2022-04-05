@@ -24,7 +24,7 @@ function ZoomedImagen({ imgs, isZoomed, setIsZoomed }) {
 
     return (
         <ZoomedImageContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            <motion.div className="zoomedContainer" initial={{ y: 150 }} animate={{ y: 0 }} transition={{ duration: 0.1 }}>
+            <motion.div className="zoomedContainer" initial={{ y: 50 }} animate={{ y: 0 }} transition={{ duration: 0.1 }}>
                 <div className="zoomedTitulo">
                     <h1>Imagen amplia</h1>
                     <GrClose onClick={() => setIsZoomed(null)} />

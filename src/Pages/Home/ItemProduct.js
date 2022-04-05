@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { RiShoppingBag3Line } from 'react-icons/ri';
@@ -29,14 +29,13 @@ function ItemProduct({ producto, favoriteList, setFavoriteList, codigo }) {
     return (
         <ProductoContainer>
             <div className="image">
-                <img src={producto.img} alt="" />
-
+                <img src={producto.images} alt="" />
                 <FavoriteButton onClick={() => handleFavorite()}>{isFavorite ? <IoMdHeart color="#e31b23 " /> : <IoMdHeartEmpty />}</FavoriteButton>
             </div>
             <div className="info">
-                <span>Código: {producto.codigoVenta}</span>
-                <h2>{producto.nombre}</h2>
-                <div className="description">{producto.description}</div>
+                <span className="info__id">ID: {producto.id}</span>
+                <h2 className="info__nombre">{producto.nombre}</h2>
+                <div className="description">{producto.eslogan}</div>
                 <div className="precio">
                     <div>
                         <label>Precio:</label>
@@ -44,7 +43,7 @@ function ItemProduct({ producto, favoriteList, setFavoriteList, codigo }) {
                             {formater.format(producto.precioMin)} - {formater.format(producto.precioMax)}
                         </label>
                     </div>
-                    <BotonCompra onClick={() => navigate(`/producto/${codigo}`)}>
+                    <BotonCompra onClick={() => navigate(`/producto/${producto.id}`)}>
                         <RiShoppingBag3Line size={20} />
                     </BotonCompra>
                 </div>
@@ -93,6 +92,16 @@ const ProductoContainer = styled(motion.div)`
 
         h2 {
             margin: 0;
+        }
+
+        .info__nombre {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .info__id {
+            font-size: 0.65em;
         }
     }
 
